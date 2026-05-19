@@ -1,0 +1,56 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and role management",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "surveyor", "applicant"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Application": {
+      "title": "Application",
+      "description": "Housing assistance application details",
+      "type": "object",
+      "properties": {
+        "applicantName": { "type": "string" },
+        "nik": { "type": "string" },
+        "address": { "type": "string" },
+        "phone": { "type": "string" },
+        "housingConditions": {
+          "type": "object",
+          "properties": {
+            "foundation": { "type": "string", "enum": ["good", "damaged", "none"] },
+            "walls": { "type": "string", "enum": ["permanent", "semi-permanent", "wood", "bamboo"] },
+            "roof": { "type": "string", "enum": ["tile", "zinc", "asbestos", "thatch"] },
+            "floor": { "type": "string", "enum": ["ceramic", "cement", "wood", "soil"] }
+          }
+        },
+        "income": { "type": "number" },
+        "dependents": { "type": "integer" },
+        "status": { "type": "string", "enum": ["pending", "verified", "approved", "rejected"] },
+        "score": { "type": "number" },
+        "aiAnalysis": { "type": "string" },
+        "surveyorId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["applicantName", "nik", "address", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Collection of user profiles"
+    },
+    "/applications/{applicationId}": {
+      "schema": "Application",
+      "description": "Collection of RTLH applications"
+    }
+  }
+}
